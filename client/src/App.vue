@@ -1,7 +1,29 @@
 <template>
-  <h1>Snowbird Weather</h1>
-  <CitiesForm @cities-changed="citiesChanged"/>
+  <div class="container-lg">
+<div class="px-3 py-2 bg-dark text-white">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <span class="fs-4">Snowbird Weather</span>
+          </a>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="#" class="nav-link text-white">
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <div class="row">
+    <CitiesForm @cities-changed="citiesChanged"/>
+  </div>
+  <div class="row">
+  </div>
   <MonthlyWeather :weatherData="weatherData"/>
+  </div>
 </template>
 
 <script>
@@ -21,7 +43,6 @@ export default {
   },
   methods: {
     citiesChanged(weatherData) {
-      console.log(JSON.stringify(event))
       this.weatherData = weatherData
     }
   }
@@ -36,9 +57,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  /* Center child horizontally*/
-  display: flex;
-  justify-content: center;    
+  margin-top: 60px;  
 }
 </style>

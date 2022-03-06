@@ -1,10 +1,12 @@
 <template>
   <div class="cities-form">
+    <div class="form-group">
     <form class="form-inline" @submit.prevent="onSubmit">
-        <h1><label>Enter Cities</label></h1>
-        <textarea class="input" v-bind:value="citiesList"></textarea>
+        <label for="citiesBox">Enter Cities</label>
+        <textarea class="form-control" id="citiesBox" rows="15" v-bind:value="citiesList"></textarea>
         <button type="submit" class="btn btn-success btn-sm">Get Weather</button>
     </form>
+    </div>
   </div>
 </template>
 
@@ -45,5 +47,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.cities-form {
+  padding: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: .2rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;  
+}
 </style>
