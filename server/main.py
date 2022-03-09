@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.logger import logger as fastapi_logger
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -18,6 +19,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+fastapi_logger.info(f"CORS origins: {origins}")
 
 @app.get("/weather")
 async def weather():
