@@ -20,6 +20,7 @@
       <tr v-for="(weather, index) in weatherData" :key="index">
         <td>{{ weather.state }}</td>
         <td>{{ weather.name }}</td>
+        <template v-if="'january_high' in weather">
         <td>
           <WeatherEmoji
             :tooHot="tooHot"
@@ -116,6 +117,10 @@
             :low="weather.december_low"
           />
         </td>
+        </template>
+        <template v-if="!('january_high' in weather)">
+        <td colspan="12">Unable to find weather for location. Try a different city.</td>
+        </template>
       </tr>
     </table>
   </div>
