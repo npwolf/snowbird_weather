@@ -52,3 +52,12 @@ createCacheDir()
 )
 def city_weather(*, session: Session = Depends(get_session), city: CityBase):
     return getWeather(session, city)
+
+@app.post(
+    "/cities_weather/", response_model=List[CityWithWeather], response_model_exclude_none=True
+)
+def city_weather(*, session: Session = Depends(get_session), cities: List[CityBase]):
+    cities_with_weather: List[CityWithWeather] = []
+    for city in cities:
+        cities_with_weather.append(getWeather(session, city))
+    return cities_with_weather

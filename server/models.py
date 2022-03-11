@@ -1,7 +1,7 @@
 from typing import Optional, List
 from click import Option
 from pydantic import BaseModel, constr, validator
-from sqlalchemy import table
+from datetime import datetime
 from sqlmodel import (
     Field,
     SQLModel,
@@ -29,6 +29,7 @@ class CityWithWeather(CityBase, table=True):
         default=None,
         primary_key=True,
     )
+    created_at: datetime = Field(default=datetime.utcnow(), nullable=False)
     january_high: Optional[int]
     january_low: Optional[int]
     february_high: Optional[int]

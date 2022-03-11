@@ -97,12 +97,6 @@ def addWeather(city: CityWithWeather):
         return
     for month in MONTHS:
         for high_low in ["high", "low"]:
-            log.error(month)
-            log.error(
-                soup.find(
-                    title=f"Climate data - {month}",
-                )
-            )
             temp = (
                 soup.find(
                     title=f"Climate data - {month}",

@@ -8,9 +8,9 @@
         </tr>
         <tr v-for="(weather, index) in weatherData" :key="index">
             <td>{{ weather.state}}</td>
-            <td>{{ weather.city }}</td>
+            <td>{{ weather.name }}</td>
             <!-- <td><WeatherEmoji too_hot="85" too_low="32" high="65" low="33"/></td> -->
-            <td><WeatherEmoji :too_hot="too_hot" :too_cold="too_cold" :high="weather.january.high" :low="weather.january.low"/></td>
+            <td><WeatherEmoji :too_hot="too_hot" :too_cold="too_cold" :high="weather.january_high" :low="weather.january_low"/></td>
         </tr>
     </table>
   </div>

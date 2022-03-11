@@ -30,10 +30,11 @@ export default {
   },
   methods: {
     onSubmit() {
-      const url = `${this.server_base_url}/weather`;
+      const url = `${this.server_base_url}/cities_weather`;
       console.log(url)
+      const cities = [{name: "Bozeman", state: "MT"}];
       axios
-        .get(url)
+        .post(url, cities)
         .then((res) => {
           this.$emit('cities-changed', res.data)
         })
