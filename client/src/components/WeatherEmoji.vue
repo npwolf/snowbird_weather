@@ -14,19 +14,19 @@ export default {
     low: {
         required: true
     },
-    too_hot: {
+    tooHot: {
         required: true
     },
-    too_cold: {
+    tooCold: {
         required: true
     },
   },
   computed: {
       getWeatherEmoji() {
-          if (this.low < this.too_cold) {
+          if (this.low < this.tooCold) {
               return '🥶'
           }
-          if (this.high > this.too_hot) {
+          if (this.high > this.tooHot) {
               return '🥵'
           }
           return '😎'
