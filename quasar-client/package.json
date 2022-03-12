@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "build": "quasar build",
     "start": "node server.js",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build && quasar build"
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build && yarn install quasar"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
