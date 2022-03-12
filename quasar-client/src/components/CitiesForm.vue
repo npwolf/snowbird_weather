@@ -1,50 +1,62 @@
 <template>
-  <div class="cities-form">
-    <div class="form-group">
-      <form class="form-inline" @submit.prevent="onSubmit">
-        <div class="row">
-          <div class="col">
-            <label>Low Temperature</label>
-          </div>
-          <div class="col">
-            <input
-              type="number"
-              @change="setTempBounds"
-              v-model.number="tooLow"
-              class="form-control"
-              placeholder="Low Temperature"
-            />
-          </div>
-          <div class="col">
-            <label for="citiesBox">High Temperature</label>
-          </div>
-          <div class="col">
-            <input
-              type="number"
-              @change="setTempBounds"
-              v-model.number="tooHigh"
-              class="form-control"
-              placeholder="High Temperature"
-            />
-          </div>
-        </div>
+  <form @submit.prevent="onSubmit">
+    <div class="row">
+      <div class="col">
+        <label>Low Temperature</label>
+      </div>
+      <div class="col">
+        <input
+          type="number"
+          @change="setTempBounds"
+          v-model.number="tooLow"
+          class="form-control"
+          placeholder="Low Temperature"
+        />
+      </div>
+      <div class="col">
+        <label for="citiesBox">High Temperature</label>
+      </div>
+      <div class="col">
+        <input
+          type="number"
+          @change="setTempBounds"
+          v-model.number="tooHigh"
+          class="form-control"
+          placeholder="High Temperature"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <label for="citiesBox">Enter Cities</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <textarea
           class="form-control"
           id="citiesBox"
           rows="15"
           v-model="citiesList"
         ></textarea>
-        <button type="submit" class="btn btn-success btn-sm">
-          Get Weather
-        </button>
-      </form>
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <q-btn type="submit" color="primary" label="Get Weather" />
+    </div>
+  </form>
 </template>
 
 <script>
 import axios from "axios";
+import process from "process";
+import {
+  Loading,
+
+  // optional!, for example below
+  // with custom spinner
+  QSpinnerGears,
+} from "quasar";
 
 export default {
   name: "CitiesForm",
@@ -74,21 +86,24 @@ export default {
       return citiesListMap;
     },
     onSubmit() {
+      Loading.show({
+        message: "Getting Weather...",
+      });
       const url = `${this.server_base_url}/cities_weather`;
       console.log(url);
       const cities = this.getCityMap();
-      let disable = false;
-      if (!disable) {
-        axios
-          .post(url, cities)
-          .then((res) => {
-            this.$emit("cities-changed", res.data);
-          })
-          .catch((error) => {
-            // eslint-disable-next-line
-            console.error(error);
-          });
-      }
+      axios
+        .post(url, cities)
+        .then((res) => {
+          this.$emit("cities-changed", res.data);
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        })
+        .finally(() => {
+          Loading.hide();
+        });
     },
   },
   emits: ["cities-changed", "temp-bounds-changed"],
@@ -105,7 +120,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.cities-form {
+/* .cities-form {
   padding: 1.5rem;
   margin-right: 0;
   margin-left: 0;
@@ -115,5 +130,5 @@ export default {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-}
+} */
 </style>
