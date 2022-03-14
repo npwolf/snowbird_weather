@@ -1,50 +1,47 @@
 <template>
-  <div class="zzz">
-    <q-form @submit.prevent="addCity">
-      <div class="column form-elements">
-        <div class="row"></div>
-        <label for="city">City</label>
-        <q-input
-          type="text"
-          ref="cityRef"
-          lazy-rules
-          :rules="cityValidations"
-          v-model="city"
-          placeholder="City, ST"
-        />
-        <label>Low Temperature</label>
-        <q-input
-          type="number"
-          @change="setTempBounds"
-          v-model.number="tooLow"
-          class="form-control"
-          placeholder="Low Temperature"
-        />
-        <label>High Temperature</label>
-        <q-input
-          type="number"
-          @change="setTempBounds"
-          v-model.number="tooHigh"
-          class="form-control"
-          placeholder="High Temperature"
-        />
-      </div>
-      <div class="column">
-        <div class="row"></div>
-        <q-btn color="primary" type="submit" label="Add City" />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
-      </div>
-    </q-form>
-    <div class="form-group"></div>
-    <div class="form-group"></div>
-    <div class="form-group"></div>
-  </div>
+  <q-card class="form-card">
+    <q-card-actions align="center">
+      <q-form @submit.prevent="addCity" class="">
+        <div class="row items-center q-gutter-md">
+          <q-input
+            class="col-grow"
+            type="text"
+            ref="cityRef"
+            lazy-rules
+            :rules="cityValidations"
+            v-model="city"
+            placeholder="City, ST"
+          />
+          <q-btn color="primary" type="submit" label="Add City" />
+          <q-btn
+            label="Reset"
+            type="reset"
+            color="primary"
+            flat
+            class="q-ml-sm"
+          />
+        </div>
+        <div class="row items-center q-gutter-md">
+          <label>Low Temperature</label>
+          <q-input
+            type="number"
+            @change="setTempBounds"
+            v-model.number="tooLow"
+            class="temp-picker"
+            placeholder="Low Temperature"
+          />
+          <label>High Temperature</label>
+          <q-input
+            type="number"
+            @change="setTempBounds"
+            v-model.number="tooHigh"
+            class="temp-picker"
+            placeholder="High Temperature"
+          />
+        </div>
+      </q-form>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
@@ -63,7 +60,6 @@ export default {
   name: "CitiesForm",
   data() {
     return {
-      citiesList: "Phoenix, AZ\nOrlando, FL\nColumbia Falls, MT",
       city: "",
       tooLow: 33,
       tooHigh: 85,
@@ -71,7 +67,7 @@ export default {
       cityValidations: [
         (val) => !!val || "Field is required",
         (val) =>
-          val.match(/^[a-z]{3,23},\s*[a-z]{2}$/i) ||
+          val.match(/^[a-z ]{3,50},\s*[a-z]{2}$/i) ||
           "Must be in format City, ST",
       ],
     };
@@ -81,10 +77,22 @@ export default {
       const tempBounds = { high: this.tooHigh, low: this.tooLow };
       this.$emit("temp-bounds-changed", tempBounds);
     },
+    notifyError(error) {
+      this.$q.notify({
+        type: "negative",
+        message: error,
+      });
+    },
+    isValidCityResponse(res) {
+      if ("january_high" in res) {
+        console.log("valid city");
+        return true;
+      } else {
+        console.log("invalid city");
+        return false;
+      }
+    },
     addCity() {
-      this.city = "";
-      this.$refs.cityRef.resetValidation();
-      this.$refs.cityRef.focus();
       Loading.show({
         message: "Getting Weather...",
       });
@@ -94,17 +102,29 @@ export default {
         state: cityStateParts[1],
       };
       const url = `${this.server_base_url}/city_weather`;
+      console.log("City: " + JSON.stringify(cityMap));
       axios
         .post(url, cityMap)
         .then((res) => {
-          this.$emit("city-added", res.data);
           console.log("Response: " + JSON.stringify(res.data));
+          if (!this.isValidCityResponse(res)) {
+            this.notifyError(
+              "Unable to find weather for " +
+                this.city +
+                ". Try a different city."
+            );
+          } else {
+            this.$emit("city-added", res.data);
+          }
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
         })
         .finally(() => {
+          this.city = "";
+          this.$refs.cityRef.resetValidation();
+          this.$refs.cityRef.focus();
           Loading.hide();
         });
     },
@@ -123,46 +143,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .cities-form {
-  padding: 1.5rem;
-  margin-right: 0;
-  margin-left: 0;
-  border-width: 0.2rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  text-align: left;
-} */
-/* form specific formatting */
-/* .form-group {
-  display: flex;
-  flex-direction: row;
-}
-
-.form-group label {
-  flex: none;
-  display: block;
-  width: 125px;
-  font-weight: bold;
-  font-size: 1em;
-}
-.form-group label.right-inline {
-  text-align: right;
-  padding-right: 8px;
-  padding-left: 10px;
-  width: auto;
-}
-
-.form-group .input-control {
-  flex: 1 1 auto;
-  display: block;
-  margin-bottom: 10px;
-  margin-right: 8px;
-  padding: 4px;
-  margin-top: -4px;
-} */
-.zzz {
-  display: flex;
+.temp-picker {
+  max-width: 50px;
 }
 </style>
