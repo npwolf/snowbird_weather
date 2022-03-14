@@ -11,9 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Snowbird Weather </q-toolbar-title>
+        <q-toolbar-title> Snowbird Weather2 </q-toolbar-title>
 
-        <div>zzz</div>
+        <div>zzzz</div>
       </q-toolbar>
     </q-header>
 

@@ -1,11 +1,11 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="row">
-      <CitiesForm
-        @cities-changed="citiesChanged"
-        @temp-bounds-changed="tempBoundsChanged"
-      />
-    </div>
+  <q-page class="flex flex-center" id="top-level">
+    <CitiesForm
+      @cities-changed="citiesChanged"
+      @city-added="cityAdded"
+      @temp-bounds-changed="tempBoundsChanged"
+    />
+
     <div class="row">
       <MonthlyWeather
         :weatherData="weatherData"
@@ -27,7 +27,6 @@ export default defineComponent({
     return {
       weatherData: [],
       tempBounds: { low: 33, high: 85 },
-      bob: "hi bob",
     };
   },
   components: {
@@ -38,9 +37,18 @@ export default defineComponent({
     citiesChanged(weatherData) {
       this.weatherData = weatherData;
     },
+    cityAdded(cityWeatherData) {
+      this.weatherData.push(cityWeatherData);
+    },
     tempBoundsChanged(tempBounds) {
       this.tempBounds = tempBounds;
     },
   },
 });
 </script>
+
+<style>
+#top-level {
+  border: 50px;
+}
+</style>
