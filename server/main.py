@@ -51,10 +51,17 @@ createCacheDir()
     "/city_weather/", response_model=CityWithWeather, response_model_exclude_none=True
 )
 def city_weather(*, session: Session = Depends(get_session), city: CityBase):
-    return getWeather(session, city)
+    log.info(f"Getting weather for {city}...")
+    try:
+        return getWeather(session, city)
+    except Exception as e:
+        log.error("Exception: " + e)
+
 
 @app.post(
-    "/cities_weather/", response_model=List[CityWithWeather], response_model_exclude_none=True
+    "/cities_weather/",
+    response_model=List[CityWithWeather],
+    response_model_exclude_none=True,
 )
 def city_weather(*, session: Session = Depends(get_session), cities: List[CityBase]):
     cities_with_weather: List[CityWithWeather] = []

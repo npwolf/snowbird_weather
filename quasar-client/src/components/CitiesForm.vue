@@ -107,7 +107,7 @@ export default {
         .post(url, cityMap)
         .then((res) => {
           console.log("Response: " + JSON.stringify(res.data));
-          if (!this.isValidCityResponse(res)) {
+          if (!this.isValidCityResponse(res.data)) {
             this.notifyError(
               "Unable to find weather for " +
                 this.city +

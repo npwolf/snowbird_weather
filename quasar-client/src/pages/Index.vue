@@ -1,87 +1,22 @@
 <template>
-  <!-- <q-page class="flex flex-center" id="top-level"> -->
-  <!-- <q-page
-    class="flex-center q-pa-lg row items-start q-gutter-md justify-center"
-  >
-    <q-card class="my-card">
-      <q-card-section class="bg-purple text-white">
-        <div class="text-h6">Our Changing Planet</div>
-        <div class="text-subtitle2">by John Doe</div>
-      </q-card-section>
-
-      <q-card-actions align="center">
-
-        <q-form class="q-gutter-md">
-          <q-input type="text" label="email" />
-          <q-btn color="primary" type="submit" label="Add City" />
-
-        </q-form>
-      </q-card-actions>
-    </q-card>
-  </q-page> -->
-
-  <!--
-  <q-page class="window-height window-width row justify-center items-center">
-    <div class="column">
-      <div class="row">
-        <h5 class="text-h5 text-black q-my-md">Company & Co</h5>
-      </div>
-      <div class="row">
-        <q-card square bordered class="q-pa-lg shadow-1">
-          <q-card-section>
-            <label>Email</label>
-            <q-form class="q-gutter-md">
-              <q-input
-                square
-                filled
-                clearable
-                v-model="email"
-                type="email"
-                label="email"
-              />
-              <label>Password</label>
-              <q-input
-                square
-                filled
-                clearable
-                v-model="password"
-                type="password"
-                label="password"
-              />
-            </q-form>
-          </q-card-section>
-          <q-card-actions class="q-px-md">
-            <q-btn
-              unelevated
-              color="light-green-7"
-              size="lg"
-              class="full-width"
-              label="Login"
-            />
-          </q-card-actions>
-          <q-card-section class="text-center q-pa-none">
-            <p class="text-grey-6">Not reigistered? Created an Account</p>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-  </q-page>
- -->
   <q-page
     class="flex-center q-pa-lg row items-start q-gutter-md justify-center"
   >
-    <CitiesForm
-      @cities-changed="citiesChanged"
-      @city-added="cityAdded"
-      @temp-bounds-changed="tempBoundsChanged"
-    />
-
-    <div class="row">
-      <MonthlyWeather
-        :weatherData="weatherData"
-        :tooCold="tempBounds['low']"
-        :tooHot="tempBounds['high']"
-      />
+    <div class="column">
+      <div class="row justify-center">
+        <CitiesForm
+          @cities-changed="citiesChanged"
+          @city-added="cityAdded"
+          @temp-bounds-changed="tempBoundsChanged"
+        />
+      </div>
+      <div class="row flex">
+        <MonthlyWeather
+          :weatherData="weatherData"
+          :tooCold="tempBounds['low']"
+          :tooHot="tempBounds['high']"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -95,8 +30,93 @@ export default defineComponent({
   name: "PageIndex",
   data() {
     return {
-      weatherData: [],
-      tempBounds: { low: 33, high: 85 },
+      weatherData: [
+        {
+          january_high: 73,
+          january_low: 67,
+          february_high: 74,
+          february_low: 69,
+          march_high: 74,
+          march_low: 70,
+          april_high: 78,
+          april_low: 75,
+          may_high: 81,
+          may_low: 78,
+          june_high: 84,
+          june_low: 81,
+          july_high: 85,
+          july_low: 82,
+          august_high: 85,
+          august_low: 83,
+          september_high: 85,
+          september_low: 82,
+          october_high: 82,
+          october_low: 79,
+          november_high: 78,
+          november_low: 74,
+          december_high: 75,
+          december_low: 71,
+          name: "Key Largo",
+          state: "FL",
+        },
+        {
+          january_high: 60,
+          january_low: 43,
+          february_high: 61,
+          february_low: 44,
+          march_high: 66,
+          march_low: 47,
+          april_high: 72,
+          april_low: 51,
+          may_high: 78,
+          may_low: 56,
+          june_high: 89,
+          june_low: 64,
+          july_high: 93,
+          july_low: 71,
+          august_high: 93,
+          august_low: 72,
+          september_high: 87,
+          september_low: 67,
+          october_high: 77,
+          october_low: 58,
+          november_high: 67,
+          november_low: 49,
+          december_high: 58,
+          december_low: 42,
+          name: "Palm Springs",
+          state: "CA",
+        },
+        {
+          january_high: 47,
+          january_low: 26,
+          february_high: 53,
+          february_low: 28,
+          march_high: 59,
+          march_low: 31,
+          april_high: 66,
+          april_low: 36,
+          may_high: 73,
+          may_low: 42,
+          june_high: 81,
+          june_low: 47,
+          july_high: 90,
+          july_low: 53,
+          august_high: 89,
+          august_low: 52,
+          september_high: 83,
+          september_low: 47,
+          october_high: 74,
+          october_low: 38,
+          november_high: 58,
+          november_low: 30,
+          december_high: 47,
+          december_low: 26,
+          name: "Yosemite National Park",
+          state: "CA",
+        },
+      ],
+      tempBounds: { low: 33, high: 80 },
     };
   },
   components: {

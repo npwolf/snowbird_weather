@@ -8,12 +8,13 @@ from sqlmodel import (
     create_engine,
     UniqueConstraint,
 )
+from time import sleep
 from constants import STATE_ABV_TO_FULL
 
 
 class CityBase(SQLModel):
     __table_args__ = (UniqueConstraint("name", "state"),)
-    name: constr(max_length=23, min_length=3, strip_whitespace=True)
+    name: constr(max_length=40, min_length=3, strip_whitespace=True)
     state: constr(max_length=2, min_length=2, strip_whitespace=True)
 
     @validator("state")
