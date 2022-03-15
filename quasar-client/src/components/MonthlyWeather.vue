@@ -6,7 +6,6 @@
       :columns="columns"
       row-key="name"
       :wrap-cells="true"
-      :hide-bottom="true"
       :hide-pagination="true"
       :rows-per-page-options="[0]"
     >

@@ -1,8 +1,8 @@
 <template>
   <q-page
-    class="flex-center q-pa-lg row items-start q-gutter-md justify-center"
+    class="flex-center q-pa-lg row-auto items-start q-gutter-md justify-center"
   >
-    <div class="column">
+    <div class="column-auto">
       <div class="row justify-center">
         <CitiesForm
           @cities-changed="citiesChanged"
@@ -11,7 +11,7 @@
         />
       </div>
       <div class="row">&nbsp;</div>
-      <div class="row justify-center">
+      <div class="row-auto justify-center">
         <MonthlyWeather
           :weatherData="weatherData"
           :tooCold="tempBounds['low']"
