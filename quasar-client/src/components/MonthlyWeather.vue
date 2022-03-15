@@ -5,8 +5,10 @@
       :rows="weatherData"
       :columns="columns"
       row-key="name"
-      :wrap-cells="alwaysTrue"
-      :hide-bottom="alwaysTrue"
+      :wrap-cells="true"
+      :hide-bottom="true"
+      :hide-pagination="true"
+      :rows-per-page-options="[0]"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -136,8 +138,6 @@ export default {
   name: "MonthlyWeather",
   data() {
     return {
-      alwaysTrue: true,
-
       columns: [
         {
           name: "delete",
