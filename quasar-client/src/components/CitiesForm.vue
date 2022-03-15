@@ -110,6 +110,7 @@ export default {
         })
         .catch((error) => {
           // eslint-disable-next-line
+          this.notifyError("Oh no, something went wrong. Try again?");
           console.error(error);
         })
         .finally(() => {
