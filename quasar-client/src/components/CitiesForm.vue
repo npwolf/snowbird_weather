@@ -16,23 +16,16 @@
           <q-btn color="primary" type="submit" label="Add City" />
         </div>
         <div class="row items-center q-gutter-md">
-          <label>Low Temperature {{ tooLow }}F</label>
-
-          <q-slider
-            label
-            v-model="tooLow"
-            @change="setTempBounds"
+          <label class="q-ma-md">Ideal Temperature Range</label>
+          <q-range
+            v-model="tempRange"
             :min="0"
             :max="100"
-          />
-          <label>High Temperature {{ tooHigh }}F</label>
-
-          <q-slider
-            label
-            v-model="tooHigh"
+            :left-label-value="'Low: ' + tempRange.min + 'F'"
+            :right-label-value="'High: ' + tempRange.max + 'F'"
+            label-always
+            color="red"
             @change="setTempBounds"
-            :min="0"
-            :max="100"
           />
         </div>
       </q-form>
@@ -60,6 +53,7 @@ export default {
       autofocus: true,
       tooLow: 33,
       tooHigh: 80,
+      tempRange: { min: 33, max: 80 },
       server_base_url: "",
       cityValidations: [
         (val) => !!val || "Field is required",
@@ -71,7 +65,7 @@ export default {
   },
   methods: {
     setTempBounds() {
-      const tempBounds = { high: this.tooHigh, low: this.tooLow };
+      const tempBounds = { high: this.tempRange.max, low: this.tempRange.min };
       this.$emit("temp-bounds-changed", tempBounds);
     },
     notifyError(error) {
