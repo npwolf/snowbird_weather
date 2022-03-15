@@ -10,11 +10,13 @@
           @temp-bounds-changed="tempBoundsChanged"
         />
       </div>
-      <div class="row flex">
+      <div class="row">&nbsp;</div>
+      <div class="row justify-center">
         <MonthlyWeather
           :weatherData="weatherData"
           :tooCold="tempBounds['low']"
           :tooHot="tempBounds['high']"
+          @delete-city="deleteCity"
         />
       </div>
     </div>
@@ -88,6 +90,34 @@ export default defineComponent({
           state: "CA",
         },
         {
+          january_high: 64,
+          january_low: 47,
+          february_high: 68,
+          february_low: 50,
+          march_high: 76,
+          march_low: 56,
+          april_high: 83,
+          april_low: 61,
+          may_high: 91,
+          may_low: 68,
+          june_high: 102,
+          june_low: 77,
+          july_high: 104,
+          july_low: 84,
+          august_high: 103,
+          august_low: 85,
+          september_high: 96,
+          september_low: 79,
+          october_high: 85,
+          october_low: 67,
+          november_high: 74,
+          november_low: 56,
+          december_high: 63,
+          december_low: 48,
+          name: "Phoenix",
+          state: "AZ",
+        },
+        {
           january_high: 47,
           january_low: 26,
           february_high: 53,
@@ -115,6 +145,34 @@ export default defineComponent({
           name: "Yosemite National Park",
           state: "CA",
         },
+        {
+          january_high: 26,
+          january_low: 13,
+          february_high: 25,
+          february_low: 11,
+          march_high: 33,
+          march_low: 19,
+          april_high: 41,
+          april_low: 24,
+          may_high: 53,
+          may_low: 32,
+          june_high: 62,
+          june_low: 39,
+          july_high: 73,
+          july_low: 44,
+          august_high: 72,
+          august_low: 44,
+          september_high: 61,
+          september_low: 38,
+          october_high: 45,
+          october_low: 29,
+          november_high: 31,
+          november_low: 20,
+          december_high: 23,
+          december_low: 11,
+          name: "East Glacier Park",
+          state: "MT",
+        },
       ],
       tempBounds: { low: 33, high: 80 },
     };
@@ -132,6 +190,12 @@ export default defineComponent({
     },
     tempBoundsChanged(tempBounds) {
       this.tempBounds = tempBounds;
+    },
+    deleteCity(city) {
+      console.log("Splice: " + city);
+      console.log("Before: " + this.weatherData.length);
+      this.weatherData.splice(this.weatherData.indexOf(city), 1);
+      console.log("After: " + this.weatherData.length);
     },
   },
 });

@@ -11,32 +11,28 @@
             :rules="cityValidations"
             v-model="city"
             placeholder="City, ST"
+            autofocus="autofocus"
           />
           <q-btn color="primary" type="submit" label="Add City" />
-          <q-btn
-            label="Reset"
-            type="reset"
-            color="primary"
-            flat
-            class="q-ml-sm"
-          />
         </div>
         <div class="row items-center q-gutter-md">
-          <label>Low Temperature</label>
-          <q-input
-            type="number"
+          <label>Low Temperature {{ tooLow }}F</label>
+
+          <q-slider
+            label
+            v-model="tooLow"
             @change="setTempBounds"
-            v-model.number="tooLow"
-            class="temp-picker"
-            placeholder="Low Temperature"
+            :min="0"
+            :max="100"
           />
-          <label>High Temperature</label>
-          <q-input
-            type="number"
+          <label>High Temperature {{ tooHigh }}F</label>
+
+          <q-slider
+            label
+            v-model="tooHigh"
             @change="setTempBounds"
-            v-model.number="tooHigh"
-            class="temp-picker"
-            placeholder="High Temperature"
+            :min="0"
+            :max="100"
           />
         </div>
       </q-form>
@@ -61,13 +57,14 @@ export default {
   data() {
     return {
       city: "",
+      autofocus: true,
       tooLow: 33,
-      tooHigh: 85,
+      tooHigh: 80,
       server_base_url: "",
       cityValidations: [
         (val) => !!val || "Field is required",
         (val) =>
-          val.match(/^[a-z ]{3,50},\s*[a-z]{2}$/i) ||
+          val.match(/^[a-z ]{3,40},\s*[a-z]{2}$/i) ||
           "Must be in format City, ST",
       ],
     };
@@ -122,10 +119,10 @@ export default {
           console.error(error);
         })
         .finally(() => {
+          Loading.hide();
           this.city = "";
           this.$refs.cityRef.resetValidation();
           this.$refs.cityRef.focus();
-          Loading.hide();
         });
     },
   },
