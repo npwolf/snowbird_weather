@@ -1,11 +1,10 @@
 from logging.config import dictConfig
 from fastapi import FastAPI, Depends, HTTPException, Query
-from fastapi.logger import logger as fastapi_logger
 from fastapi.middleware.cors import CORSMiddleware
-from models import *
+from models import CityWithWeather, CityBase, create_db
 from typing import List
 import os
-from sqlmodel import Session, select
+from sqlmodel import Session
 from weather import createCacheDir, getWeather
 from typing import List, Union
 import logging
@@ -34,7 +33,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-fastapi_logger.info(f"CORS origins: {origins}")
+log.info(f"CORS origins: {origins}")
 
 engine = create_db()
 
