@@ -125,7 +125,9 @@ export default {
     if (typeof process.env.VUE_APP_SERVER_BASE_URL !== "undefined") {
       this.server_base_url = process.env.VUE_APP_SERVER_BASE_URL;
     } else {
-      console.log("Using local dev url. Set SERVER_BASE_URL if different.");
+      console.log(
+        "Using local dev url. Set VUE_APP_SERVER_BASE_URL if different."
+      );
       this.server_base_url = "http://localhost:8000";
     }
   },
