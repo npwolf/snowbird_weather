@@ -1,6 +1,5 @@
-from typing import Optional, List
-from click import Option
-from pydantic import BaseModel, constr, validator
+from typing import Optional
+from pydantic import constr, validator
 from datetime import datetime
 from sqlmodel import (
     Field,
@@ -10,6 +9,10 @@ from sqlmodel import (
 )
 from time import sleep
 from constants import STATE_ABV_TO_FULL
+import os
+import logging
+
+log = logging.getLogger("snowbird_weather")
 
 
 class CityBase(SQLModel):
@@ -59,6 +62,8 @@ class CityWithWeather(CityBase, table=True):
 
 def create_db():
     sqlite_file_name = "database.db"
+    if os.path.exists(sqlite_file_name):
+        log.info("Using existing database!")
     sqlite_url = f"sqlite:///{sqlite_file_name}"
     engine = create_engine(sqlite_url, echo=True)
     SQLModel.metadata.create_all(engine)
