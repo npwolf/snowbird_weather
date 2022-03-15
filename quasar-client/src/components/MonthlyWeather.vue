@@ -1,6 +1,7 @@
 <template>
   <div class="q-m-md">
     <q-table
+      class="weather-table"
       title="Average Weather"
       :rows="weatherData"
       :columns="columns"
@@ -229,4 +230,17 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style lang="sass">
+.weather-table
+  thead tr:nth-child(2) th:nth-child(2)
+    background-color: #fff
+    opacity: 1
+
+  td:nth-child(2)
+    background-color: white
+
+  td:nth-child(2)
+    position: sticky
+    left: 0
+    z-index: 1
+</style>
