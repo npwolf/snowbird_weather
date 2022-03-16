@@ -1,15 +1,35 @@
 <template>
-  <div class="q-m-md">
+  <div class="col">
     <q-table
       class="weather-table"
-      title="Average Weather"
       :rows="weatherData"
       :columns="columns"
       row-key="name"
+      title="Average Weather"
       :wrap-cells="true"
       :hide-pagination="true"
       :rows-per-page-options="[0]"
+      :dense="true"
     >
+      <!-- <template #top>
+        <div class="row">
+          <div class="table-title col">Average Weather</div>
+          <div class="temp-range-slider">
+            <q-range
+              class=""
+              v-model="tempRange"
+              :min="0"
+              :max="100"
+              :left-label-value="'Low: ' + tempRange.min + 'F'"
+              :right-label-value="'High: ' + tempRange.max + 'F'"
+              label-always
+              color="red"
+              @change="setTempBounds"
+            />
+          </div>
+        </div>
+      </template> -->
+
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="delete" :props="props">
@@ -138,6 +158,7 @@ export default {
   name: "MonthlyWeather",
   data() {
     return {
+      tempRange: { min: 33, max: 80 },
       columns: [
         {
           name: "delete",
@@ -224,6 +245,7 @@ export default {
       console.log("Delete row: " + JSON.stringify(props));
       this.$emit("delete-city", props.row);
     },
+    setTempBounds() {},
   },
   emits: ["delete-city"],
 };
@@ -231,7 +253,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass">
+.temp-range-slider
+  min-width: 300px
+.table-title
+  font-size: 20px
+  letter-spacing: 0.005em
+  font-weight: 400
 .weather-table
+  max-width: 800px
   thead tr:nth-child(2) th:nth-child(2)
     background-color: #fff
     opacity: 1

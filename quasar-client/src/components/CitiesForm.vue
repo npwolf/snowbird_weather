@@ -1,35 +1,45 @@
 <template>
-  <q-card class="form-card">
-    <q-card-actions align="center">
+  <q-card class="col">
+    <q-card-section align="">
       <q-form @submit.prevent="addCity" class="">
-        <div class="row items-center q-gutter-md">
-          <q-input
-            class="col-grow"
-            type="text"
-            ref="cityRef"
-            lazy-rules
-            :rules="cityValidations"
-            v-model="city"
-            placeholder="City, ST"
-            autofocus="autofocus"
-          />
-          <q-btn color="primary" type="submit" label="Add City" />
-        </div>
-        <div class="row items-center q-gutter-md">
-          <label class="q-ma-md">Ideal Temperature Range</label>
-          <q-range
-            v-model="tempRange"
-            :min="0"
-            :max="100"
-            :left-label-value="'Low: ' + tempRange.min + 'F'"
-            :right-label-value="'High: ' + tempRange.max + 'F'"
-            label-always
-            color="red"
-            @change="setTempBounds"
-          />
+        <div class="row items-center">
+          <div class="col-9">
+            <q-input
+              class="col"
+              type="text"
+              ref="cityRef"
+              lazy-rules
+              :rules="cityValidations"
+              v-model="city"
+              placeholder="City, ST"
+              autofocus="autofocus"
+            >
+              <template v-slot:prepend> <q-icon name="place" /> </template
+            ></q-input>
+          </div>
+          <div class="col">
+            <q-btn color="primary" type="submit" label="Add City" />
+          </div>
         </div>
       </q-form>
-    </q-card-actions>
+    </q-card-section>
+  </q-card>
+  <q-card class="col-4">
+    <q-card-section align="center">
+      <div class="row items-center q-gutter-md">
+        <label class="q-ma-md">Ideal Temperature Range</label>
+        <q-range
+          v-model="tempRange"
+          :min="0"
+          :max="100"
+          :left-label-value="'Low: ' + tempRange.min + 'F'"
+          :right-label-value="'High: ' + tempRange.max + 'F'"
+          label-always
+          color="red"
+          @change="setTempBounds"
+        />
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 

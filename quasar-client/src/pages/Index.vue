@@ -1,17 +1,15 @@
 <template>
-  <q-page
-    class="flex-center q-pa-lg row-auto items-start q-gutter-md justify-center"
-  >
-    <div class="column-auto">
-      <div class="row justify-center">
+  <q-page class="q-pa-sm main-page">
+    <div class="col">
+      <div class="row wrap justify-center q-gutter-md">
         <CitiesForm
           @cities-changed="citiesChanged"
           @city-added="cityAdded"
           @temp-bounds-changed="tempBoundsChanged"
         />
       </div>
-      <div class="row">&nbsp;</div>
-      <div class="row-auto justify-center">
+      <div class="row justify-center">&nbsp;</div>
+      <div class="row-auto">
         <MonthlyWeather
           :weatherData="weatherData"
           :tooCold="tempBounds['low']"
@@ -192,10 +190,7 @@ export default defineComponent({
       this.tempBounds = tempBounds;
     },
     deleteCity(city) {
-      console.log("Splice: " + city);
-      console.log("Before: " + this.weatherData.length);
       this.weatherData.splice(this.weatherData.indexOf(city), 1);
-      console.log("After: " + this.weatherData.length);
     },
   },
   watch: {
@@ -227,4 +222,8 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.main-page {
+  max-width: 100%;
+}
+</style>
