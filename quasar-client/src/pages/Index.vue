@@ -198,6 +198,32 @@ export default defineComponent({
       console.log("After: " + this.weatherData.length);
     },
   },
+  watch: {
+    weatherData: {
+      handler() {
+        console.log("Saving weatherData to local storage.");
+        localStorage.setItem("weatherData", JSON.stringify(this.weatherData));
+      },
+      deep: true,
+    },
+    tempBounds: {
+      handler() {
+        console.log("Saving tempBounds to local storage.");
+        localStorage.setItem("tempBounds", JSON.stringify(this.tempBounds));
+      },
+    },
+  },
+  mounted() {
+    console.log("mounted");
+    if (localStorage.getItem("weatherData")) {
+      console.log("Using weatherData from local storage.");
+      this.weatherData = JSON.parse(localStorage.getItem("weatherData"));
+    }
+    if (localStorage.getItem("tempBounds")) {
+      console.log("Using tempBounds from local storage.");
+      this.tempBounds = JSON.parse(localStorage.getItem("tempBounds"));
+    }
+  },
 });
 </script>
 
