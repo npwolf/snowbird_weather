@@ -1,45 +1,41 @@
 <template>
-  <div class="city-temp q-gutter-md">
-    <q-card class="col">
-      <q-card-section>
-        <q-form @submit.prevent="addCity" class="">
-          <div class="row items-center justify-center q-gutter-sm">
-            <div class="col-8 seventy">
-              <q-input
-                class="col"
-                type="text"
-                ref="cityRef"
-                lazy-rules
-                :rules="cityValidations"
-                v-model="city"
-                placeholder="City, ST"
-                autofocus="autofocus"
-                @keyup="typingCity"
-              >
-                <template v-slot:prepend> <q-icon name="place" /> </template
-              ></q-input>
-            </div>
-            <div class="col no-wrap">
-              <q-btn
-                ref="addCityRef"
-                color="primary"
-                type="submit"
-                label="Add City"
-                :disabled="!this.city.length"
-              />
-            </div>
+  <q-card class="col">
+    <q-card-section>
+      <q-form @submit.prevent="addCity" class="">
+        <div class="row items-center justify-center q-gutter-sm">
+          <div class="col-8 seventy">
+            <q-input
+              class="col"
+              type="text"
+              ref="cityRef"
+              lazy-rules
+              :rules="cityValidations"
+              v-model="city"
+              placeholder="City, ST"
+              autofocus="autofocus"
+              @keyup="typingCity"
+            >
+              <template v-slot:prepend> <q-icon name="place" /> </template
+            ></q-input>
           </div>
-        </q-form>
-      </q-card-section>
-    </q-card>
-    <IdealTemp />
-  </div>
+          <div class="col no-wrap">
+            <q-btn
+              ref="addCityRef"
+              color="primary"
+              type="submit"
+              label="Add City"
+              :disabled="!this.city.length"
+            />
+          </div>
+        </div>
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
 import axios from "axios";
 import process from "process";
-import IdealTemp from "./IdealTemp.vue";
 
 import {
   Loading,
@@ -136,26 +132,10 @@ export default {
       this.server_base_url = "http://localhost:8000";
     }
   },
-
-  components: {
-    IdealTemp,
-  },
 };
 </script>
 <style scoped>
-.city-temp {
-  display: flex;
-  flex-direction: row;
-}
-
 .seventy {
   min-width: 70%;
-}
-
-/* Responsive layout - makes a one column layout instead of a two-column layout */
-@media (max-width: 800px) {
-  .city-temp {
-    flex-direction: column;
-  }
 }
 </style>
