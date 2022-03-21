@@ -2,7 +2,7 @@
   <div class="col">
     <q-table
       class="weather-table"
-      :rows="weatherData"
+      :rows="weatherStore.cities"
       :columns="columns"
       row-key="name"
       title="Average Weather"
@@ -205,19 +205,16 @@ export default {
     };
   },
 
-  props: {
-    weatherData: {
-      type: Array,
-      required: true,
-    },
-  },
   components: {
     WeatherEmoji,
   },
   methods: {
     deleteRow(props) {
       console.log("Delete row: " + JSON.stringify(props));
-      this.$emit("delete-city", props.row);
+      this.weatherStore.cities.splice(
+        this.weatherStore.cities.indexOf(props.row),
+        1
+      );
     },
   },
   computed: {
@@ -229,7 +226,6 @@ export default {
       return this.weatherStore.tempMin;
     },
   },
-  emits: ["delete-city"],
 };
 </script>
 

@@ -1,14 +1,13 @@
 <template>
   <q-page class="q-pa-sm main-page">
-    <!-- <Piniata /> -->
     <div class="col">
       <div class="city-temp q-gutter-md">
-        <CitiesForm @cities-changed="citiesChanged" @city-added="cityAdded" />
+        <CitiesForm />
         <IdealTemp />
       </div>
       <div class="row justify-center">&nbsp;</div>
       <div class="row-auto">
-        <MonthlyWeather :weatherData="weatherData" @delete-city="deleteCity" />
+        <MonthlyWeather />
       </div>
     </div>
   </q-page>
@@ -23,183 +22,12 @@ import IdealTemp from "./../components/IdealTemp.vue";
 export default defineComponent({
   name: "PageIndex",
   data() {
-    return {
-      weatherData: [
-        {
-          january_high: 73,
-          january_low: 67,
-          february_high: 74,
-          february_low: 69,
-          march_high: 74,
-          march_low: 70,
-          april_high: 78,
-          april_low: 75,
-          may_high: 81,
-          may_low: 78,
-          june_high: 84,
-          june_low: 81,
-          july_high: 85,
-          july_low: 82,
-          august_high: 85,
-          august_low: 83,
-          september_high: 85,
-          september_low: 82,
-          october_high: 82,
-          october_low: 79,
-          november_high: 78,
-          november_low: 74,
-          december_high: 75,
-          december_low: 71,
-          name: "Key Largo",
-          state: "FL",
-        },
-        {
-          january_high: 60,
-          january_low: 43,
-          february_high: 61,
-          february_low: 44,
-          march_high: 66,
-          march_low: 47,
-          april_high: 72,
-          april_low: 51,
-          may_high: 78,
-          may_low: 56,
-          june_high: 89,
-          june_low: 64,
-          july_high: 93,
-          july_low: 71,
-          august_high: 93,
-          august_low: 72,
-          september_high: 87,
-          september_low: 67,
-          october_high: 77,
-          october_low: 58,
-          november_high: 67,
-          november_low: 49,
-          december_high: 58,
-          december_low: 42,
-          name: "Palm Springs",
-          state: "CA",
-        },
-        {
-          january_high: 64,
-          january_low: 47,
-          february_high: 68,
-          february_low: 50,
-          march_high: 76,
-          march_low: 56,
-          april_high: 83,
-          april_low: 61,
-          may_high: 91,
-          may_low: 68,
-          june_high: 102,
-          june_low: 77,
-          july_high: 104,
-          july_low: 84,
-          august_high: 103,
-          august_low: 85,
-          september_high: 96,
-          september_low: 79,
-          october_high: 85,
-          october_low: 67,
-          november_high: 74,
-          november_low: 56,
-          december_high: 63,
-          december_low: 48,
-          name: "Phoenix",
-          state: "AZ",
-        },
-        {
-          january_high: 47,
-          january_low: 26,
-          february_high: 53,
-          february_low: 28,
-          march_high: 59,
-          march_low: 31,
-          april_high: 66,
-          april_low: 36,
-          may_high: 73,
-          may_low: 42,
-          june_high: 81,
-          june_low: 47,
-          july_high: 90,
-          july_low: 53,
-          august_high: 89,
-          august_low: 52,
-          september_high: 83,
-          september_low: 47,
-          october_high: 74,
-          october_low: 38,
-          november_high: 58,
-          november_low: 30,
-          december_high: 47,
-          december_low: 26,
-          name: "Yosemite National Park",
-          state: "CA",
-        },
-        {
-          january_high: 26,
-          january_low: 13,
-          february_high: 25,
-          february_low: 11,
-          march_high: 33,
-          march_low: 19,
-          april_high: 41,
-          april_low: 24,
-          may_high: 53,
-          may_low: 32,
-          june_high: 62,
-          june_low: 39,
-          july_high: 73,
-          july_low: 44,
-          august_high: 72,
-          august_low: 44,
-          september_high: 61,
-          september_low: 38,
-          october_high: 45,
-          october_low: 29,
-          november_high: 31,
-          november_low: 20,
-          december_high: 23,
-          december_low: 11,
-          name: "East Glacier Park",
-          state: "MT",
-        },
-      ],
-      tempBounds: { low: 0, high: 100 },
-    };
+    return {};
   },
   components: {
     CitiesForm,
     IdealTemp,
     MonthlyWeather,
-  },
-  methods: {
-    citiesChanged(weatherData) {
-      this.weatherData = weatherData;
-    },
-    cityAdded(cityWeatherData) {
-      this.weatherData.push(cityWeatherData);
-    },
-    deleteCity(city) {
-      this.weatherData.splice(this.weatherData.indexOf(city), 1);
-    },
-  },
-  watch: {
-    weatherData: {
-      handler() {
-        console.log("Saving weatherData to local storage.");
-        localStorage.setItem("weatherData", JSON.stringify(this.weatherData));
-      },
-      deep: true,
-    },
-  },
-  mounted() {
-    console.log("mounted");
-    if (localStorage.getItem("weatherData")) {
-      console.log("Using weatherData from local storage.");
-      this.weatherData = JSON.parse(localStorage.getItem("weatherData"));
-    }
   },
 });
 </script>

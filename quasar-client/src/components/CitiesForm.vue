@@ -36,6 +36,8 @@
 <script>
 import axios from "axios";
 import process from "process";
+import { useWeatherStore } from "./../stores/weather";
+import { mapStores } from "pinia";
 
 import {
   Loading,
@@ -76,10 +78,8 @@ export default {
     },
     isValidCityResponse(res) {
       if ("january_high" in res) {
-        console.log("valid city");
         return true;
       } else {
-        console.log("invalid city");
         return false;
       }
     },
@@ -105,7 +105,7 @@ export default {
                 ". Try a different city."
             );
           } else {
-            this.$emit("city-added", res.data);
+            this.weatherStore.cities.push(res.data);
           }
         })
         .catch((error) => {
@@ -121,7 +121,6 @@ export default {
         });
     },
   },
-  emits: ["cities-changed", "city-added"],
   created() {
     if (typeof process.env.VUE_APP_SERVER_BASE_URL !== "undefined") {
       this.server_base_url = process.env.VUE_APP_SERVER_BASE_URL;
@@ -131,6 +130,9 @@ export default {
       );
       this.server_base_url = "http://localhost:8000";
     }
+  },
+  computed: {
+    ...mapStores(useWeatherStore),
   },
 };
 </script>
