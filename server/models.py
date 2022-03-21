@@ -61,10 +61,16 @@ class CityWithWeather(CityBase, table=True):
 
 
 def create_db():
-    sqlite_file_name = "database.db"
-    if os.path.exists(sqlite_file_name):
-        log.info("Using existing database!")
-    sqlite_url = f"sqlite:///{sqlite_file_name}"
-    engine = create_engine(sqlite_url, echo=True)
+
+    if os.getenv("DATABASE_URL"):
+        # Heroku
+        DATABASE_URL = os.env["DATABASE_URL"]
+    else:
+        sqlite_file_name = "database.db"
+        if os.path.exists(sqlite_file_name):
+            log.info("Using existing file database!")
+        DATABASE_URL = f"sqlite:///{sqlite_file_name}"
+    log.info(f"Database URL: {DATABASE_URL}")
+    engine = create_engine(DATABASE_URL, echo=True)
     SQLModel.metadata.create_all(engine)
     return engine
