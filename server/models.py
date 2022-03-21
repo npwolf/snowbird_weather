@@ -74,5 +74,5 @@ def create_db():
         database_url = f"sqlite:///{sqlite_file_name}"
     log.info(f"Database URL: {database_url}")
     engine = create_engine(database_url, echo=True)
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(engine, checkfirst=True)
     return engine
