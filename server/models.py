@@ -64,13 +64,15 @@ def create_db():
 
     if os.getenv("DATABASE_URL"):
         # Heroku
-        DATABASE_URL = os.environ["DATABASE_URL"]
+        database_url = os.environ["DATABASE_URL"]
+        # SQLAlchemy doesn't allow the old prefix (for heroku)
+        database_url = database_url.replace("postgres://", "postgresql://")
     else:
         sqlite_file_name = "database.db"
         if os.path.exists(sqlite_file_name):
             log.info("Using existing file database!")
-        DATABASE_URL = f"sqlite:///{sqlite_file_name}"
-    log.info(f"Database URL: {DATABASE_URL}")
-    engine = create_engine(DATABASE_URL, echo=True)
+        database_url = f"sqlite:///{sqlite_file_name}"
+    log.info(f"Database URL: {database_url}")
+    engine = create_engine(database_url, echo=True)
     SQLModel.metadata.create_all(engine)
     return engine
