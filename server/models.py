@@ -64,7 +64,7 @@ def create_db():
 
     if os.getenv("DATABASE_URL"):
         # Heroku
-        DATABASE_URL = os.env["DATABASE_URL"]
+        DATABASE_URL = os.environ["DATABASE_URL"]
     else:
         sqlite_file_name = "database.db"
         if os.path.exists(sqlite_file_name):
