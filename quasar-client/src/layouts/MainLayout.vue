@@ -2,8 +2,20 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title> Snowbird Weather </q-toolbar-title>
-        <div class="row items-center justify-center q-gutter-md">
+        <q-toolbar-title>
+          <div class="row q-gutter-md">
+            <div class="col-shrink">
+              <img
+                src="~assets/logo.png"
+                style="width: 25px; height: 25px"
+                alt="Logo"
+              />
+            </div>
+            <div class="col-shrink">Snowbird Weather</div>
+            <div class="col-grow">&nbsp;</div>
+          </div>
+        </q-toolbar-title>
+        <div class="row items-left justify-left q-gutter-md">
           <div class="col">
             <a href="https://www.instagram.com/roadship.enterprise/">
               <img
@@ -17,7 +29,7 @@
               <img
                 src="~assets/info.svg"
                 style="width: 25px; height: 25px"
-                alt="Instagram"
+                alt="About"
             /></a>
           </div>
         </div>
