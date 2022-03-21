@@ -1,52 +1,46 @@
 <template>
-  <q-card class="col">
-    <q-card-section align="">
-      <q-form @submit.prevent="addCity" class="">
-        <div class="row items-center">
-          <div class="col-9">
-            <q-input
-              class="col"
-              type="text"
-              ref="cityRef"
-              lazy-rules
-              :rules="cityValidations"
-              v-model="city"
-              placeholder="City, ST"
-              autofocus="autofocus"
-            >
-              <template v-slot:prepend> <q-icon name="place" /> </template
-            ></q-input>
+  <div class="city-temp q-gutter-md">
+    <q-card class="col">
+      <q-card-section>
+        <q-form @submit.prevent="addCity" class="">
+          <div class="row items-center justify-center q-gutter-sm">
+            <div class="col-8 seventy">
+              <q-input
+                class="col"
+                type="text"
+                ref="cityRef"
+                lazy-rules
+                :rules="cityValidations"
+                v-model="city"
+                placeholder="City, ST"
+                autofocus="autofocus"
+                @keyup="typingCity"
+              >
+                <template v-slot:prepend> <q-icon name="place" /> </template
+              ></q-input>
+            </div>
+            <div class="col no-wrap">
+              <q-btn
+                ref="addCityRef"
+                color="primary"
+                type="submit"
+                label="Add City"
+                :disabled="!this.city.length"
+              />
+            </div>
           </div>
-          <div class="col">
-            <q-btn color="primary" type="submit" label="Add City" />
-          </div>
-        </div>
-      </q-form>
-    </q-card-section>
-  </q-card>
-  <q-card class="col-4">
-    <q-card-section align="center">
-      <div class="row items-center q-gutter-md">
-        <label class="q-ma-md">Ideal Temperature Range</label>
-        <q-range
-          v-model="tempRange"
-          :min="0"
-          :max="100"
-          :left-label-value="'Low: ' + tempRange.min + 'F'"
-          :right-label-value="'High: ' + tempRange.max + 'F'"
-          label-always
-          color="red"
-          @change="setTempBounds"
-        />
-      </div>
-    </q-card-section>
-  </q-card>
+        </q-form>
+      </q-card-section>
+    </q-card>
+    <IdealTemp />
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import process from "process";
-import { ref } from "vue";
+import IdealTemp from "./IdealTemp.vue";
+
 import {
   Loading,
 
@@ -61,22 +55,22 @@ export default {
     return {
       city: "",
       autofocus: true,
-      tooLow: 33,
-      tooHigh: 80,
-      tempRange: { min: 33, max: 80 },
       server_base_url: "",
-      cityValidations: [
-        (val) => !!val || "Field is required",
-        (val) =>
-          val.match(/^[a-z ]{3,40},\s*[a-z]{2}$/i) ||
-          "Must be in format City, ST",
-      ],
+      cityValidations: [],
     };
   },
   methods: {
-    setTempBounds() {
-      const tempBounds = { high: this.tempRange.max, low: this.tempRange.min };
-      this.$emit("temp-bounds-changed", tempBounds);
+    typingCity() {
+      if (this.city.length) {
+        this.cityValidations = [
+          (val) =>
+            val.match(/^[a-z ]{3,40},\s*[a-z]{2}$/i) ||
+            "Must be in format City, ST",
+        ];
+      } else {
+        this.cityValidations = [];
+        this.$refs.cityRef.resetValidation();
+      }
     },
     notifyError(error) {
       this.$q.notify({
@@ -131,7 +125,7 @@ export default {
         });
     },
   },
-  emits: ["cities-changed", "temp-bounds-changed", "city-added"],
+  emits: ["cities-changed", "city-added"],
   created() {
     if (typeof process.env.VUE_APP_SERVER_BASE_URL !== "undefined") {
       this.server_base_url = process.env.VUE_APP_SERVER_BASE_URL;
@@ -142,5 +136,26 @@ export default {
       this.server_base_url = "http://localhost:8000";
     }
   },
+
+  components: {
+    IdealTemp,
+  },
 };
 </script>
+<style scoped>
+.city-temp {
+  display: flex;
+  flex-direction: row;
+}
+
+.seventy {
+  min-width: 70%;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+  .city-temp {
+    flex-direction: column;
+  }
+}
+</style>

@@ -11,25 +11,6 @@
       :rows-per-page-options="[0]"
       :dense="true"
     >
-      <!-- <template #top>
-        <div class="row">
-          <div class="table-title col">Average Weather</div>
-          <div class="temp-range-slider">
-            <q-range
-              class=""
-              v-model="tempRange"
-              :min="0"
-              :max="100"
-              :left-label-value="'Low: ' + tempRange.min + 'F'"
-              :right-label-value="'High: ' + tempRange.max + 'F'"
-              label-always
-              color="red"
-              @change="setTempBounds"
-            />
-          </div>
-        </div>
-      </template> -->
-
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="delete" :props="props">
@@ -153,12 +134,13 @@
 
 <script>
 import WeatherEmoji from "./WeatherEmoji.vue";
+import { useWeatherStore } from "./../stores/weather";
+import { mapStores } from "pinia";
 
 export default {
   name: "MonthlyWeather",
   data() {
     return {
-      tempRange: { min: 33, max: 80 },
       columns: [
         {
           name: "delete",
@@ -228,14 +210,6 @@ export default {
       type: Array,
       required: true,
     },
-    tooHot: {
-      type: Number,
-      required: true,
-    },
-    tooCold: {
-      type: Number,
-      required: true,
-    },
   },
   components: {
     WeatherEmoji,
@@ -245,7 +219,15 @@ export default {
       console.log("Delete row: " + JSON.stringify(props));
       this.$emit("delete-city", props.row);
     },
-    setTempBounds() {},
+  },
+  computed: {
+    ...mapStores(useWeatherStore),
+    tooHot() {
+      return this.weatherStore.tempMax;
+    },
+    tooCold() {
+      return this.weatherStore.tempMin;
+    },
   },
   emits: ["delete-city"],
 };

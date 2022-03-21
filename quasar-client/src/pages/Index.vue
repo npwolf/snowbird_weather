@@ -1,21 +1,11 @@
 <template>
   <q-page class="q-pa-sm main-page">
+    <!-- <Piniata /> -->
     <div class="col">
-      <div class="row wrap justify-center q-gutter-md">
-        <CitiesForm
-          @cities-changed="citiesChanged"
-          @city-added="cityAdded"
-          @temp-bounds-changed="tempBoundsChanged"
-        />
-      </div>
+      <CitiesForm @cities-changed="citiesChanged" @city-added="cityAdded" />
       <div class="row justify-center">&nbsp;</div>
       <div class="row-auto">
-        <MonthlyWeather
-          :weatherData="weatherData"
-          :tooCold="tempBounds['low']"
-          :tooHot="tempBounds['high']"
-          @delete-city="deleteCity"
-        />
+        <MonthlyWeather :weatherData="weatherData" @delete-city="deleteCity" />
       </div>
     </div>
   </q-page>
@@ -172,7 +162,7 @@ export default defineComponent({
           state: "MT",
         },
       ],
-      tempBounds: { low: 33, high: 80 },
+      tempBounds: { low: 0, high: 100 },
     };
   },
   components: {
@@ -186,9 +176,6 @@ export default defineComponent({
     cityAdded(cityWeatherData) {
       this.weatherData.push(cityWeatherData);
     },
-    tempBoundsChanged(tempBounds) {
-      this.tempBounds = tempBounds;
-    },
     deleteCity(city) {
       this.weatherData.splice(this.weatherData.indexOf(city), 1);
     },
@@ -201,22 +188,12 @@ export default defineComponent({
       },
       deep: true,
     },
-    tempBounds: {
-      handler() {
-        console.log("Saving tempBounds to local storage.");
-        localStorage.setItem("tempBounds", JSON.stringify(this.tempBounds));
-      },
-    },
   },
   mounted() {
     console.log("mounted");
     if (localStorage.getItem("weatherData")) {
       console.log("Using weatherData from local storage.");
       this.weatherData = JSON.parse(localStorage.getItem("weatherData"));
-    }
-    if (localStorage.getItem("tempBounds")) {
-      console.log("Using tempBounds from local storage.");
-      this.tempBounds = JSON.parse(localStorage.getItem("tempBounds"));
     }
   },
 });
