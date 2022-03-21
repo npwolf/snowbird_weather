@@ -2,7 +2,7 @@
   <q-page class="q-pa-sm main-page">
     <div class="col">
       <div class="city-temp q-gutter-md">
-        <CitiesForm />
+        <AddCity />
         <IdealTemp />
       </div>
       <div class="row justify-center">&nbsp;</div>
@@ -15,7 +15,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import CitiesForm from "./../components/CitiesForm.vue";
+import AddCity from "./../components/AddCity.vue";
 import MonthlyWeather from "./../components/MonthlyWeather.vue";
 import IdealTemp from "./../components/IdealTemp.vue";
 
@@ -25,7 +25,7 @@ export default defineComponent({
     return {};
   },
   components: {
-    CitiesForm,
+    AddCity,
     IdealTemp,
     MonthlyWeather,
   },

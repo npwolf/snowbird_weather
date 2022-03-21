@@ -48,7 +48,7 @@ import {
 } from "quasar";
 
 export default {
-  name: "CitiesForm",
+  name: "AddCity",
   data() {
     return {
       city: "",
