@@ -1,9 +1,9 @@
 <template>
   <q-card class="col">
     <q-card-section>
-      <q-form @submit.prevent="addCity" class="">
-        <div class="row items-center justify-center q-gutter-sm">
-          <div class="col-8 seventy">
+      <q-form @submit.prevent="addCity">
+        <div class="row items-end justify-evenly">
+          <div class="col">
             <q-input
               class="col"
               type="text"
@@ -18,7 +18,7 @@
               <template v-slot:prepend> <q-icon name="place" /> </template
             ></q-input>
           </div>
-          <div class="col no-wrap">
+          <div class="col-shrink">
             <q-btn
               ref="addCityRef"
               color="primary"
